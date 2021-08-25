@@ -171,9 +171,14 @@ module.exports = {
           if (!('sBye' in chat)) chat.sBye = ''
           if (!('sPromote' in chat)) chat.sPromote = ''
           if (!('sDemote' in chat)) chat.sDemote = ''
+          if (!('stiker' in chat)) chat.stiker = false
           if (!('delete' in chat)) chat.delete = false
           if (!('antiLink' in chat)) chat.antiLink = false
-          if (!'antiToxic' in chat) chat.antiToxic = false
+          if (!('antiVirtext' in chat)) chat.antiVirtext = false
+          if (!('antiPhilip' in chat)) chat.antiPhilip = false
+          if (!('antiBugfont' in chat)) chat.antiBugfont = false
+          if (!('antiToxic' in chat)) chat.antiToxic = false
+          if (!isNumber(chat.expired)) chat.expired = 0
         } else global.DATABASE._data.chats[m.chat] = {
           isBanned: false,
           welcome: false,
@@ -182,9 +187,31 @@ module.exports = {
           sBye: '',
           sPromote: '',
           sDemote: '',
+          stiker: false,
           delete: false,
           antiLink: false,
+          antiVirtext: false,
+          antiPhilip: false,
+          antiBugfont: false,
           antiToxic: false,
+          expired: 0,
+        }
+       let settings = global.DATABASE.data.settings
+        if (typeof settings !== 'object') global.DATABASE.data.settings = {}
+        if (settings) {
+          if (!'antispam' in settings) settings.antispam = true
+          if (!'antitroli' in settings) settings.antitroli = true
+          if (!'backup' in settings) settings.backup = false
+          if (!isNumber(settings.backupDATABASE)) settings.backupDATABASE = 0
+          if (!'groupOnly' in settings) settings.groupOnly = false
+          if (!'nsfw' in settings) settings.nsfw = true
+        } else global.DATABASE.data.settings = {
+          antispam: true,
+          antitroli: true,
+          backup: false,
+          backupDB: 0,
+          groupOnly: false,
+          nsfw: true
         }
       } catch (e) {
         console.error(e)
